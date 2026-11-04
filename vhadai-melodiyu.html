@@ -20,9 +20,8 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
 .st b{display:block;font-size:1.45rem;margin-top:3px}
 .st small{font-size:.95rem;opacity:.8}
 #score{position:absolute;left:8px;top:12px;bottom:12px;width:30px;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none}
-.sn{font-size:1.25rem;font-weight:800;line-height:1;text-shadow:0 0 12px currentColor}
-#n0{color:#ff8cc6;transform:rotate(180deg)}
-#n1{color:#5af7dd}
+.sn{font-size:1.25rem;font-weight:800;line-height:1;color:#fff}
+#n0{transform:rotate(180deg)}
 .track{position:relative;flex:1;width:8px;border-radius:4px;background:rgba(255,255,255,.16)}
 .track::after{content:"";position:absolute;left:-4px;right:-4px;top:50%;height:2px;border-radius:1px;background:rgba(255,255,255,.55)}
 .track i{position:absolute;left:0;right:0;height:0;border-radius:4px;transition:height .5s cubic-bezier(.3,1.4,.5,1)}
@@ -33,7 +32,7 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
 .flash{animation:fl .8s ease-out}
 @keyframes fl{0%{filter:brightness(1.9) saturate(1.4)}100%{filter:none}}
 #mid{position:relative;flex:0 0 33dvh;min-height:250px;padding:10px 52px;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;background:#0b0a14}
-#ttl{position:absolute;right:14px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;-webkit-writing-mode:vertical-rl;white-space:nowrap;letter-spacing:.6px;font-weight:800;font-size:1.17rem;background:linear-gradient(180deg,#ff8cc6,#a78bfa,#5af7dd);-webkit-background-clip:text;background-clip:text;color:transparent;pointer-events:none}
+#ttl{position:absolute;right:14px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;-webkit-writing-mode:vertical-rl;white-space:nowrap;letter-spacing:.6px;font-weight:800;font-size:1.17rem;color:#fff;pointer-events:none}
 #eq{width:84%;height:50px;display:block}
 #bar{width:84%;height:6px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden}
 #fill{height:100%;width:0;background:linear-gradient(90deg,#ff5fae,#3ff2d6)}
@@ -55,9 +54,46 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
 @keyframes bn{to{transform:translateY(-14px) scale(1.08)}}
 #win{font-size:2rem;background:linear-gradient(90deg,#ff8cc6,#5af7dd);-webkit-background-clip:text;background-clip:text;color:transparent}
 #fin{font-size:3rem;font-weight:800}
+#home{position:absolute;right:10px;top:6px;width:34px;height:34px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:1.1rem;line-height:1;z-index:2}
+#menu{z-index:5;overflow:hidden;background:#0b0a14;justify-content:flex-start;gap:0;padding:max(9dvh,40px) 20px 24px}
+#menu>*{position:relative;z-index:1;width:100%;max-width:460px}
+.blob{position:absolute!important;z-index:0!important;border-radius:50%;filter:blur(70px);opacity:.55;pointer-events:none;width:320px!important;height:320px;animation:fl2 9s ease-in-out infinite alternate}
+.b1{background:#b7237f;top:-90px;left:-110px}
+.b2{background:#19b9cd;bottom:-100px;right:-110px;animation-delay:-4s}
+.b3{background:#5a1a8a;top:38%;left:30%;width:260px!important;height:260px;opacity:.5}
+@keyframes fl2{to{transform:translate(40px,30px) scale(1.15)}}
+.mh{text-align:center;margin-bottom:8dvh}
+.mh small{display:block;font-size:.85rem;letter-spacing:4px;text-transform:uppercase;opacity:.6;margin-bottom:8px}
+#menu h1{font-size:2.3rem;line-height:1.1;font-weight:800;color:#fff;text-shadow:0 0 30px rgba(167,139,250,.6)}
+.games{display:flex;flex-direction:column;gap:16px}
+.tile{position:relative;overflow:hidden;width:100%;border:0;border-radius:28px;display:flex;align-items:center;gap:16px;padding:22px 20px;text-align:left;color:#fff;font-family:"Avenir Next","Nunito","Trebuchet MS",system-ui,sans-serif;background:linear-gradient(120deg,#d62c8e 0%,#7a2bb5 50%,#19b9cd 100%);box-shadow:0 12px 36px rgba(167,139,250,.35),inset 0 1px 0 rgba(255,255,255,.35);transition:transform .15s,box-shadow .15s}
+.tile::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 140% at 0% 0%,rgba(255,255,255,.28),transparent 55%);pointer-events:none}
+.tile:active{transform:scale(.97);box-shadow:0 6px 18px rgba(167,139,250,.3)}
+.ti{flex:0 0 auto;width:68px;height:68px;border-radius:20px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:2.2rem;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
+.tt{flex:1;min-width:0;position:relative}
+.tt b{display:block;font-size:1.45rem;font-weight:800;line-height:1.15}
+.tt em{display:block;font-style:normal;font-size:.9rem;opacity:.85;margin-top:4px}
+.tv{display:flex;align-items:flex-end;gap:3px;height:22px;margin-top:10px}
+.tv i{width:4px;border-radius:2px;background:#fff;opacity:.85;animation:eqb 1s ease-in-out infinite alternate}
+.tv i:nth-child(2n){animation-duration:.7s}.tv i:nth-child(3n){animation-duration:1.3s}.tv i:nth-child(4n){animation-delay:-.4s}
+@keyframes eqb{from{height:20%}to{height:100%}}
+.go{flex:0 0 auto;width:42px;height:42px;border-radius:50%;background:#fff;color:#7a2bb5;display:flex;align-items:center;justify-content:center;font-size:1.1rem;padding-left:3px;position:relative}
+#tomenu{min-height:46px;padding:0 26px;border:2px solid rgba(255,255,255,.5);border-radius:23px;background:transparent;color:#fff;font:700 1.05rem "Avenir Next","Nunito","Trebuchet MS",system-ui,sans-serif}
 </style>
 </head>
 <body>
+<div class="ov" id="menu">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="mh"><small>Один екран · двоє гравців</small><h1>Ігри для двох</h1></div>
+  <div class="games">
+    <button class="tile" id="g1">
+      <div class="ti">🎵</div>
+      <div class="tt"><b>Вгадай мелодію</b><em>Хто першим впізнає пісню?</em><div class="tv"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+      <div class="go">▶</div>
+    </button>
+  </div>
+</div>
+
 <div id="app">
   <section class="half p1">
     <div class="st"></div>
@@ -65,6 +101,7 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
   </section>
   <div id="mid">
     <div id="score"><div class="sn" id="n0">0</div><div class="track"><i id="m0"></i><i id="m1"></i></div><div class="sn" id="n1">0</div></div>
+    <button id="home" aria-label="Головне меню">☰</button>
     <div id="ttl">Вгадай мелодію</div>
     <canvas id="eq"></canvas>
     <div id="bar"><div id="fill"></div></div>
@@ -93,6 +130,7 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
   <h2 id="win"></h2>
   <div id="fin"></div>
   <button id="again">Грати знову</button>
+  <button id="tomenu">У головне меню</button>
 </div>
 
 <audio id="au" preload="auto" playsinline></audio>
@@ -204,7 +242,7 @@ async function find(s){
 }
 
 /* ---------- гра ---------- */
-let queue=[],ready=[],busy=false,sc=[0,0],ph='load',cur=null,who=0,iv=null,tm=null;
+let queue=[],ready=[],busy=false,sc=[0,0],ph='menu',cur=null,who=0,iv=null,tm=null;
 const au=$('au');
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
@@ -233,12 +271,13 @@ async function waitReady(){
 async function load(){
   ph='load';$('go').hidden=true;setSc();setMsg('Шукаю пісні…');
   fill();await waitReady();
+  if(ph!=='load')return;
   if(!ready.length){
     ph='err';setMsg('Не вдалося знайти пісні.<br>iTunes міг тимчасово обмежити запити — зачекай хвилину (без VPN) і спробуй ще раз.');
     $('go').textContent='Спробувати ще раз';$('go').hidden=false;return;
   }
   ph='idle';
-  setMsg(`Слухай мелодію. Хто впізнав — тисни «ЗНАЮ» і впиши назву.<br>Перший до ${TARGET} очок перемагає.`);
+  setMsg(`Слухай мелодію. Хто впізнав — тисни «ЗНАЮ» і впиши назву.<br>Перший до ${TARGET} балів перемагає.`);
   $('go').textContent='▶ Старт';$('go').hidden=false;
 }
 
@@ -249,6 +288,7 @@ async function startRound(){
   if(!ready.length){
     ph='wait';setMsg('Завантажую наступну пісню…');
     await waitReady();
+    if(ph!=='wait')return;
     if(!ready.length){ph='err';setMsg('Не вдалося завантажити пісню.<br>Перевір інтернет.');$('go').textContent='Спробувати ще раз';$('go').hidden=false;return}
   }
   cur=ready.shift();fill();
@@ -262,7 +302,7 @@ async function startRound(){
 }
 au.onended=()=>{if(ph==='play')noOne()};
 au.onerror=()=>{if(ph==='play'&&ready.length){ph='skip';startRound()}};
-const noOne=()=>reveal(-1,'😶 Ніхто не вгадав. Очок немає');
+const noOne=()=>reveal(-1,'😶 Ніхто не вгадав. Балів немає');
 
 function buzz(p){
   if(ph!=='play')return;
@@ -284,9 +324,9 @@ function answer(timeout){
   clearInterval(tm);
   const g=timeout?'none':grade($('inp').value,cur);
   $('ans').hidden=true;$('inp').blur();
-  if(g==='full'){sc[who]++;reveal(who,`✅ Вірно! +1 ${NAMES[who]}`)}
-  else if(g==='half')reveal(-1,'🤏 Потрібні і назва, і виконавець — очок немає');
-  else{sc[1-who]++;reveal(1-who,`❌ ${NAMES[who]} помилився — очко ${DAT[1-who]}`)}
+  if(g==='full'){sc[who]++;reveal(who,`✅ Вірно! +1 бал ${DAT[who]}`)}
+  else if(g==='half')reveal(-1,'🤏 Потрібні і назва, і виконавець — балів немає');
+  else{sc[1-who]++;reveal(1-who,`❌ ${NAMES[who]} помилився — бал ${DAT[1-who]}`)}
 }
 
 function reveal(w,msg){
@@ -298,6 +338,7 @@ function reveal(w,msg){
 }
 
 function finish(){
+  if(ph!=='rev')return;
   const w=sc[0]>=TARGET?0:1;
   $('win').textContent=`Перемагає ${NAMES[w]}!`;
   $('fin').textContent=`${sc[0]} : ${sc[1]}`;
@@ -338,6 +379,17 @@ document.querySelectorAll('.half').forEach(e=>{
 $('ok').onclick=()=>answer(false);
 $('inp').onkeydown=e=>{if(e.key==='Enter')answer(false)};
 $('again').onclick=newGame;
+function toMenu(){
+  clearInterval(iv);clearInterval(tm);au.pause();ph='menu';
+  $('ans').hidden=true;$('end').hidden=true;$('inp').blur();
+  $('menu').hidden=false;
+}
+function openGame(){
+  $('menu').hidden=true;sc=[0,0];setSc();$('fill').style.width='0';load();
+}
+$('home').onclick=toMenu;
+$('tomenu').onclick=toMenu;
+$('g1').onclick=openGame;
 /* ---------- еквалайзер ---------- */
 (function(){
   const c=$('eq'),x=c.getContext('2d'),N=32,H=[],P=[],V=[];
@@ -373,7 +425,6 @@ $('again').onclick=newGame;
   requestAnimationFrame(frame);
 })();
 
-load();
 </script>
 </body>
 </html>
