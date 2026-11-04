@@ -35,12 +35,12 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
 #ttl{position:absolute;right:14px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;-webkit-writing-mode:vertical-rl;white-space:nowrap;letter-spacing:.6px;font-weight:800;font-size:1.17rem;color:#fff;pointer-events:none}
 #eq{width:84%;height:50px;display:block}
 #bar{position:relative;width:84%;height:8px;background:rgba(255,255,255,.12);border-radius:4px}
-#glow{position:absolute;inset:0}
-#fill{position:absolute;inset:0;border-radius:4px;clip-path:inset(0 100% 0 0);background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.7) 50%,transparent 65%) 220% 0/220% 100% no-repeat,linear-gradient(90deg,#ff5fae,#a78bfa 50%,#3ff2d6)}
+#glow{position:absolute;inset:0;border-radius:4px;overflow:hidden}
+#fill{position:absolute;inset:0;border-radius:4px;overflow:hidden;clip-path:inset(0 100% 0 0);background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.95) 50%,transparent 70%) 220% 0/220% 100% no-repeat,linear-gradient(90deg,#ff5fae,#a78bfa 50%,#3ff2d6)}
 #bar.live #fill{animation:sh 1.6s linear infinite}
 @keyframes sh{from{background-position:220% 0,0 0}to{background-position:-120% 0,0 0}}
 #head{position:absolute;top:50%;left:0;width:0;height:0;opacity:0;transition:opacity .9s ease-out;pointer-events:none}
-#head i{position:absolute;right:0;top:-5px;width:54px;height:10px;border-radius:5px;transform-origin:100% 50%;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.55) 65%,#fff);filter:blur(2.5px) drop-shadow(0 0 7px rgba(167,139,250,.95));animation:tw .8s ease-in-out infinite alternate,tv2 1.3s ease-in-out infinite alternate}
+#head i{position:absolute;right:0;top:-5px;width:64px;height:10px;border-radius:5px;transform-origin:100% 50%;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.8) 60%,#fff);filter:blur(2px) drop-shadow(0 0 8px rgba(255,255,255,.95));animation:tw .8s ease-in-out infinite alternate,tv2 1.3s ease-in-out infinite alternate}
 @keyframes tw{from{transform:scaleX(.55);opacity:.7}to{transform:scaleX(1.1);opacity:1}}
 @keyframes tv2{from{margin-top:-1px}to{margin-top:1px}}
 #go{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 32px;border:0;border-radius:23px;background:#f6f3ff;color:#1d0f52;font:800 1.15rem "Avenir Next","Nunito","Trebuchet MS",system-ui,sans-serif}
@@ -65,20 +65,16 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
 @keyframes bn{to{transform:translateY(-14px) scale(1.08)}}
 #win{font-size:2rem;background:linear-gradient(90deg,#ff8cc6,#5af7dd);-webkit-background-clip:text;background-clip:text;color:transparent}
 #fin{font-size:3rem;font-weight:800}
-#menu{z-index:5;overflow:hidden;background:#0b0a14;justify-content:flex-start;gap:0;padding:max(9dvh,40px) 20px 24px}
+#menu{z-index:5;overflow:hidden;background:#07060c;justify-content:flex-start;gap:0;padding:max(9dvh,40px) 20px 24px}
 #menu>*{position:relative;z-index:1;width:100%;max-width:460px}
-.blob{position:absolute!important;z-index:0!important;border-radius:50%;filter:blur(70px);opacity:.55;pointer-events:none;width:320px!important;height:320px;animation:fl2 9s ease-in-out infinite alternate}
-.b1{background:#b7237f;top:-90px;left:-110px}
-.b2{background:#19b9cd;bottom:-100px;right:-110px;animation-delay:-4s}
-.b3{background:#5a1a8a;top:38%;left:30%;width:260px!important;height:260px;opacity:.5}
-@keyframes fl2{to{transform:translate(40px,30px) scale(1.15)}}
 .mh{text-align:center;margin-bottom:8dvh}
 .mh small{display:block;font-size:.85rem;letter-spacing:4px;text-transform:uppercase;opacity:.6;margin-bottom:8px}
 #menu h1{font-size:2.3rem;line-height:1.1;font-weight:800;color:#fff;text-shadow:0 0 30px rgba(167,139,250,.6)}
 .games{display:flex;flex-direction:column;gap:16px}
-.tile{position:relative;overflow:hidden;width:100%;border:0;border-radius:28px;display:flex;align-items:center;gap:16px;padding:22px 20px;text-align:left;color:#fff;font-family:"Avenir Next","Nunito","Trebuchet MS",system-ui,sans-serif;background:linear-gradient(120deg,#d62c8e 0%,#7a2bb5 50%,#19b9cd 100%);box-shadow:0 12px 36px rgba(167,139,250,.35),inset 0 1px 0 rgba(255,255,255,.35);transition:transform .15s,box-shadow .15s}
+.tile{position:relative;overflow:hidden;width:100%;border:0;border-radius:28px;display:flex;align-items:center;gap:16px;padding:22px 20px;text-align:left;color:#fff;font-family:"Avenir Next","Nunito","Trebuchet MS",system-ui,sans-serif;background:linear-gradient(100deg,#ff5fae,#a78bfa,#3ff2d6,#a78bfa,#ff5fae) 0 0/200% 100%;animation:flow 6s linear infinite;text-shadow:0 1px 14px rgba(40,10,90,.55);box-shadow:0 12px 36px rgba(167,139,250,.3),inset 0 1px 0 rgba(255,255,255,.4);transition:transform .15s,box-shadow .15s}
+@keyframes flow{to{background-position:200% 0}}
 .tile::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 140% at 0% 0%,rgba(255,255,255,.28),transparent 55%);pointer-events:none}
-.tile:active{transform:scale(.97);box-shadow:0 6px 18px rgba(167,139,250,.3)}
+.tile:active{transform:scale(.97);box-shadow:0 6px 18px rgba(167,139,250,.25)}
 .ti{flex:0 0 auto;width:68px;height:68px;border-radius:20px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:2.2rem;box-shadow:inset 0 0 0 1px rgba(255,255,255,.3)}
 .tt{flex:1;min-width:0;position:relative}
 .tt b{display:block;font-size:1.45rem;font-weight:800;line-height:1.15}
@@ -87,7 +83,6 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
 .tv i{width:4px;border-radius:2px;background:#fff;opacity:.85;animation:eqb 1s ease-in-out infinite alternate}
 .tv i:nth-child(2n){animation-duration:.7s}.tv i:nth-child(3n){animation-duration:1.3s}.tv i:nth-child(4n){animation-delay:-.4s}
 @keyframes eqb{from{height:20%}to{height:100%}}
-.go{flex:0 0 auto;width:42px;height:42px;border-radius:50%;background:#fff;color:#7a2bb5;display:flex;align-items:center;justify-content:center;font-size:1.1rem;padding-left:3px;position:relative}
 #tomenu{min-height:46px;padding:0 26px;border:2px solid rgba(255,255,255,.5);border-radius:23px;background:transparent;color:#fff;font:700 1.05rem "Avenir Next","Nunito","Trebuchet MS",system-ui,sans-serif}
 </style>
 </head>
@@ -95,13 +90,11 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="hg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="0" spreadMethod="reflect"><stop offset="0" stop-color="#ff5fae"/><stop offset="1" stop-color="#3ff2d6"/><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="48 0" dur="3s" repeatCount="indefinite"/></linearGradient></defs></svg>
 
 <div class="ov" id="menu">
-  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
-  <div class="mh"><small>Один екран · двоє гравців</small><h1>Ігри для двох</h1></div>
+    <div class="mh"><small>Один екран · двоє гравців</small><h1>Ігри для двох</h1></div>
   <div class="games">
     <button class="tile" id="g1">
       <div class="ti">🎵</div>
       <div class="tt"><b>Вгадай мелодію</b><em>Хто першим впізнає пісню?</em><div class="tv"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
-      <div class="go">▶</div>
     </button>
   </div>
 </div>
@@ -115,7 +108,7 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
     <div id="score"><div class="sn" id="n0">0</div><div class="track"><i id="m0"></i><i id="m1"></i></div><div class="sn" id="n1">0</div></div>
     <div id="ttl">Вгадай мелодію</div>
     <canvas id="eq"></canvas>
-    <div id="bar"><div id="glow"><div id="fill"></div></div><div id="head"><i></i></div></div>
+    <div id="bar"><div id="glow"><div id="fill"><div id="head"><i></i></div></div></div></div>
     <div id="msg"></div>
     <div id="btns" hidden>
       <button id="go" hidden>Старт</button>
@@ -156,30 +149,58 @@ const LIMIT=15, TARGET=10;
 
 // Назви й виконавці — лише для пошуку та перевірки відповіді. Аудіо береться з iTunes.
 const POOL=[
+ // Океан Ельзи
  {a:'Океан Ельзи',t:'Обійми'},{a:'Океан Ельзи',t:'Відпусти'},{a:'Океан Ельзи',t:'Без бою'},
  {a:'Океан Ельзи',t:'Вставай'},{a:'Океан Ельзи',t:'Стіна'},{a:'Океан Ельзи',t:'Там, де нас нема'},
+ {a:'Океан Ельзи',t:'Я так хочу'},{a:'Океан Ельзи',t:'Не питай'},{a:'Океан Ельзи',t:'Місто весни'},
+ {a:'Океан Ельзи',t:'Холодно'},{a:'Океан Ельзи',t:'Мить'},
+ // Євробачення та сучасна сцена
  {a:'Kalush Orchestra',t:'Stefania',alt:['Стефанія']},
- {a:'Go_A',t:'Shum',alt:['Шум'],aa:['Го А']},
- {a:'KAZKA',t:'Плакала',alt:['Plakala']},{a:'KAZKA',t:'Свята'},{a:'KAZKA',t:'Дива'},
+ {a:'Go_A',t:'Shum',alt:['Шум'],aa:['Го А'],k:'go a'},{a:'Go_A',t:'Solovey',alt:['Соловей'],aa:['Го А'],k:'go a'},
+ {a:'KAZKA',t:'Плакала',alt:['Plakala']},{a:'KAZKA',t:'Свята'},{a:'KAZKA',t:'Дива'},{a:'KAZKA',t:'Криниця'},
  {a:'TVORCHI',t:'Heart of Steel',alt:['Серце зі сталі','Харт оф стіл']},{a:'TVORCHI',t:'Bumblebee',alt:['Бамблбі','Джміль']},
- {a:'Jamala',t:'1944',aa:['Джамала']},
+ {a:'Jamala',t:'1944',aa:['Джамала']},{a:'Jamala',t:'Заплуталась',aa:['Джамала']},{a:'Jamala',t:'Подих',aa:['Джамала']},
  {a:'Антитіла',t:'Фортеця Бахмут'},
  {a:'Христина Соловій',t:'Тримай'},
  {a:'Onuka',t:'Vsi svoi',alt:['Всі свої']},{a:'Onuka',t:'Misto',alt:['Місто']},
- {a:'Бумбокс',t:'Вахтерам',alt:['Vakhteram']},
+ {a:'Бумбокс',t:'Вахтерам',alt:['Vakhteram']},{a:'Бумбокс',t:'Квіти в волоссі'},{a:'Бумбокс',t:'Таця'},
  {a:'MELOVIN',aa:['Мелович','Мелвін'],t:'Under the Ladder',alt:['Андер зе леддер','Під драбиною']},
  {a:'The Hardkiss',t:'Helpless',alt:['Хелплес','Безпорадна']},{a:'The Hardkiss',t:'Make Up',alt:['Мейк ап']},
+ {a:'The Hardkiss',t:'Кораблі'},{a:'The Hardkiss',t:'Stones',alt:['Стоунз']},
  {a:'MARUV',t:'Siren Song',alt:['Сайрен сонг']},{a:'MARUV',t:'Drunk Groove',alt:['Дранк грув']},
- {a:'Скрябін',t:'Люди як кораблі'},
- {a:'Alyona Alyona',t:'Рибки'},
+ {a:'MARUV',t:'Focus on Me',alt:['Фокус он мі']},{a:'MARUV',t:'Black Water',alt:['Блек вотер']},
+ // рок і класика
+ {a:'Скрябін',t:'Люди як кораблі'},{a:'Скрябін',t:'Мам'},{a:'Скрябін',t:'Монро'},
+ {a:'Воплі Відоплясова',t:'Країна мрій'},{a:'Воплі Відоплясова',t:'Весна'},{a:'Воплі Відоплясова',t:'Танців'},
+ {a:'Софія Ротару',aa:['Ротару','Sofia Rotaru'],t:'Червона рута'},
+ {a:'Софія Ротару',aa:['Ротару','Sofia Rotaru'],t:'Водограй'},
+ {a:'Софія Ротару',aa:['Ротару','Sofia Rotaru'],t:'Одна калина'},
+ // поп і хіп-хоп
+ {a:'Alyona Alyona',t:'Рибки'},{a:'Alyona Alyona',t:'Пушка'},
  {a:'Alyona Alyona',t:'Teresa & Maria',alt:['Тереза і Марія']},
  {a:'Монатік',t:'Вітаміни'},
  {a:'Руслана',t:'Wild Dances',alt:['Дикі танці']},
  {a:'Верка Сердючка',t:'Dancing Lasha Tumbai',alt:['Денсінг Лаша Тумбай','Данс Лаша Тумбай','Лаша Тумбай','Танцюю Лаша Тумбай']},
  {a:'Тіна Кароль',t:'Show Me Your Love',alt:['Шоу мі ю лав','Покажи свою любов']},
+ {a:'Тіна Кароль',t:'Ноченька'},{a:'Тіна Кароль',t:'Вільна'},
  {a:'Ані Лорак',t:'Shady Lady',alt:['Шейді лейді']},
- {a:'Воплі Відоплясова',t:'Країна мрій'},{a:'Воплі Відоплясова',t:'Весна'},{a:'Воплі Відоплясова',t:'Танців'},
  {a:'Pianoбой',t:'Ти не така'}
+];
+// Виконавці: пісні беруться з iTunes автоматично (до 40 на виконавця) — це дає сотні різних треків
+const AR=(a,o={})=>({a,any:true,...o});
+const ARTISTS=[
+ AR('Океан Ельзи'),AR('Скрябін'),AR('Воплі Відоплясова'),AR('Тартак'),AR('Друга Ріка'),AR('Бумбокс'),
+ AR('Антитіла'),AR('KAZKA'),AR('The Hardkiss'),AR('Тіна Кароль'),AR('Jamala',{aa:['Джамала']}),AR('Onuka'),
+ AR('Go_A',{aa:['Го А'],k:'go a'}),AR('Kalush Orchestra'),AR('TVORCHI'),AR('MARUV'),AR('Alyona Alyona'),
+ AR('MELOVIN',{aa:['Мелович','Мелвін']}),AR('Христина Соловій'),AR('Pianoбой'),AR('Руслана'),
+ AR('Софія Ротару',{aa:['Ротару','Sofia Rotaru']}),AR('Брати Гадюкіни'),AR('ДахаБраха',{aa:['DakhaBrakha','Dakha Brakha']}),
+ AR('Один в каное'),AR('Latexfauna'),AR('Артем Пивоваров'),AR('Святослав Вакарчук'),AR('Dzidzio',{aa:['Дзідзьо']}),
+ AR('Jerry Heil'),AR('Alina Pash'),AR('LELÉKA',{aa:['Лелека']}),AR('Марія Бурмака'),AR('Іво Бобул'),
+ AR('Тарас Чубай'),AR('Плач Єремії'),AR('Мандри'),AR('Кому Вниз'),AR('Мотор\'ролла'),AR('Фліт'),
+ AR('Гайдамаки'),AR('Жадан і Собаки'),AR('Сергій Бабкін'),AR('Vivienne Mort'),AR('Козак Систем'),
+ AR('Паліндром'),AR('Тінь Сонця'),AR('Mamarika'),AR('NK',{aa:['Настя Каменських']}),AR('Ірина Білик'),
+ AR('Оля Полякова'),AR('Alyosha',{aa:['Альоша']}),AR('Злата Огнєвіч'),AR('Maks Barskih',{aa:['Макс Барських']}),
+ AR('Tember'),AR('Skofka'),AR('Poshlaya Molly'),AR('Хамерман Знищує Віруси')
 ];
 
 /* ---------- нечіткий збіг ---------- */
@@ -236,23 +257,85 @@ function jsonp(url){
     s.src=url+'&callback='+cb;document.head.appendChild(s);
   });
 }
-const CK='melodiya_urls';
+const CK='melodiya_urls',AK='melodiya_art',SK='melodiya_seen';
+const key=s=>s.a+'|'+s.t;
 const cacheGet=()=>{try{return JSON.parse(localStorage.getItem(CK))||{}}catch(e){return{}}};
-const cacheSet=(s,u)=>{try{const c=cacheGet();c[s.a+'|'+s.t]=u;localStorage.setItem(CK,JSON.stringify(c))}catch(e){}};
+const cacheSet=(s,u)=>{try{const c=cacheGet();c[key(s)]=u;localStorage.setItem(CK,JSON.stringify(c))}catch(e){}};
+const artGet=()=>{try{return JSON.parse(localStorage.getItem(AK))||{}}catch(e){return{}}};
+const artSet=(n,l)=>{try{const c=artGet();c[n]=l;localStorage.setItem(AK,JSON.stringify(c))}catch(e){}};
+// пісні, які вже звучали — щоб не повторювались (зберігається між запусками)
+const SEEN=new Set((()=>{try{return JSON.parse(localStorage.getItem(SK))||[]}catch(e){return[]}})());
+const seenAdd=k=>{SEEN.add(k);try{localStorage.setItem(SK,JSON.stringify([...SEEN].slice(-800)))}catch(e){}};
+const MISS=new Set();
+function dropBad(s){
+  if(!s)return;
+  try{
+    const c=cacheGet();delete c[key(s)];localStorage.setItem(CK,JSON.stringify(c));
+    const a=artGet();if(a[s.a]){a[s.a]=a[s.a].filter(x=>x.u!==s.url);localStorage.setItem(AK,JSON.stringify(a))}
+  }catch(e){}
+}
+// не частіше одного запиту на ~0.7 с, щоб не впертись у ліміт iTunes
+let lastNet=0;
+async function gap(){const w=lastNet+700-Date.now();lastNet=Date.now()+Math.max(w,0);if(w>0)await sleep(w)}
+function artKeys(s){
+  if(s.k)return[s.k];
+  const ks=[];
+  [s.a,...(s.aa||[])].forEach(n=>norm(n).split(' ').filter(w=>w.length>=4).forEach(w=>ks.push(w.slice(0,5))));
+  return ks.length?ks:[norm(s.a).split(' ')[0]];
+}
+const artOk=(s,name)=>{const n=norm(name||'');return artKeys(s).some(k=>n.includes(k))};
+const BAD=/remix|live|instrumental|karaoke|acoustic|radio edit|version|\bedit\b|\bmix\b|demo|intro|outro|skit|ремікс|наживо|концерт/i;
+const cleanTitle=t=>t.replace(/\s*[\(\[].*?[\)\]]/g,'').replace(/\s+-\s+.*$/,'').trim();
+
+async function search(url){
+  try{return await jsonp(url)}catch(e){const r=await fetch(url);return await r.json()}
+}
 async function find(s){
   try{
+    await gap();
     const q=encodeURIComponent(s.a+' '+s.t);
-    const url=`https://itunes.apple.com/search?term=${q}&entity=song&limit=10&country=UA`;
-    let j;
-    try{j=await jsonp(url)}catch(e){const r=await fetch(url);j=await r.json()}
-    const at=norm(s.a).split(' '),A=(at.find(w=>w.length>=4)||at[0]).slice(0,5);
+    const j=await search(`https://itunes.apple.com/search?term=${q}&entity=song&limit=10&country=UA`);
     const tw=norm(s.t).split(' ').filter(w=>w.length>=3);
     const T=tw.length?tw:[norm(s.t)];
-    const m=j.results.find(x=>x.previewUrl && norm(x.artistName).includes(A) &&
+    const m=j.results.find(x=>x.previewUrl && artOk(s,x.artistName) &&
       T.some(w=>norm(x.trackName).split(' ').some(y=>sim(y,w)>=.75)));
     if(m)cacheSet(s,m.previewUrl);
     return m?{...s,url:m.previewUrl}:null;
   }catch(e){return null}
+}
+// усі пісні виконавця (до 40), без реміксів/лайвів
+async function findArtist(s){
+  try{
+    await gap();
+    const q=encodeURIComponent(s.a);
+    const j=await search(`https://itunes.apple.com/search?term=${q}&entity=song&attribute=artistTerm&limit=60&country=UA`);
+    const seen=new Set(),out=[];
+    for(const x of j.results||[]){
+      if(!x.previewUrl||!artOk(s,x.artistName)||BAD.test(x.trackName))continue;
+      const t=cleanTitle(x.trackName),n=norm(t);
+      if(!n||t.length>40||seen.has(n))continue;
+      seen.add(n);out.push({t,u:x.previewUrl});
+    }
+    return out.slice(0,40);
+  }catch(e){return null}
+}
+async function resolve(s){
+  if(!s.any){
+    const c=cacheGet()[key(s)];
+    return c?{...s,url:c}:await find(s);
+  }
+  let list=artGet()[s.a];
+  if(!list){
+    if(MISS.has(s.a))return null;
+    list=await findArtist(s);
+    if(!list)return null;
+    if(!list.length){MISS.add(s.a);return null}
+    artSet(s.a,list);
+  }
+  const fresh=list.filter(x=>!SEEN.has(s.a+'|'+x.t));
+  const arr=fresh.length?fresh:list;
+  const x=arr[Math.random()*arr.length|0];
+  return{a:s.a,aa:s.aa,t:x.t,url:x.u};
 }
 
 /* ---------- гра ---------- */
@@ -261,14 +344,21 @@ const au=$('au');
 const ICO='<svg class="pi" viewBox="0 0 24 24" width="20" height="20" fill="url(#hg)" stroke="url(#hg)" stroke-width="2" stroke-linejoin="round"><path d="M7 4.5v15l12-7.5z"/></svg>';
 function setGo(t,i){$('go').innerHTML=(i===1?ICO:'')+'<span>'+t+'</span>'+(i===2?ICO:'')}
 function setBar(v){$('fill').style.clipPath='inset(0 '+(100-v*100)+'% 0 0)';$('head').style.left=v*100+'%'}
-let bT=0,bS=0,bK=0;
+let bT=0,bPlay=false,bLast=0;
+/* час рахуємо лише коли звук реально заграв; між оновленнями currentTime — плавна екстраполяція */
+au.addEventListener('playing',()=>{bPlay=true;bT=au.currentTime});
+['pause','waiting','stalled','ended','emptied','error'].forEach(e=>au.addEventListener(e,()=>{bPlay=false}));
 (function barLoop(now){
+  const dt=Math.min(Math.max((now-bLast)/1000,0),.1);bLast=now;
   let on=false;
-  if(ph==='play'&&!au.paused){
-    const c=au.currentTime;
-    if(c!==bT){bT=c;bS=now}
-    const v=Math.min((bT+Math.min((now-bS)/1000,.3))/LIMIT,1);
-    setBar(v);on=v>.004&&v<.99;
+  if(ph==='play'){
+    if(bPlay&&!au.paused){
+      bT+=dt;
+      const e=au.currentTime-bT;
+      if(Math.abs(e)>.3)bT=au.currentTime;else bT+=e*.08;
+    }
+    const v=Math.min(bT/LIMIT,1);
+    setBar(v);on=bPlay&&v>.004&&v<.99;
   }
   $('head').style.opacity=on?1:0;$('bar').classList.toggle('live',on);
   requestAnimationFrame(barLoop);
@@ -280,15 +370,18 @@ const setMsg=h=>{document.querySelectorAll('.st').forEach(e=>e.innerHTML='');$('
 function setSc(){[0,1].forEach(p=>{$('n'+p).textContent=sc[p];$('m'+p).style.height=Math.min(sc[p]/TARGET,1)*50+'%'})}
 function flash(p){const e=document.querySelector(p?'.p2':'.p1');e.classList.remove('flash');void e.offsetWidth;e.classList.add('flash')}
 
+function buildQueue(){
+  let c=POOL.filter(x=>!SEEN.has(key(x)));
+  if(c.length<8){POOL.forEach(x=>SEEN.delete(key(x)));c=POOL.slice()}
+  return shuffle([...c,...ARTISTS]);
+}
 async function fill(){
   if(busy)return;busy=true;let fails=0;
-  while(ready.length<3&&fails<6){
-    if(!queue.length)queue=shuffle(POOL);
-    const s=queue.pop(),c=cacheGet()[s.a+'|'+s.t];
-    if(c){ready.push({...s,url:c});continue}
-    const t=await find(s);
-    t?ready.push(t):fails++;
-    await sleep(300);
+  while(ready.length<3&&fails<12){
+    if(!queue.length)queue=buildQueue();
+    const t=await resolve(queue.pop());
+    if(t&&!ready.some(r=>key(r)===key(t))&&!(cur&&key(cur)===key(t))){ready.push(t);fails=0}
+    else fails++;
   }
   busy=false;
 }
@@ -313,14 +406,14 @@ async function load(){
 function newGame(){sc=[0,0];setSc();$('end').hidden=true;startRound()}
 
 async function startRound(){
-  $('go').hidden=true;clearInterval(iv);setBar(0);bT=0;bS=0;
+  $('go').hidden=true;clearInterval(iv);setBar(0);bT=0;bPlay=false;
   if(!ready.length){
     ph='wait';setMsg('Завантажую наступну пісню…');
     await waitReady();
     if(ph!=='wait')return;
     if(!ready.length){ph='err';setMsg('Не вдалося завантажити пісню.<br>Перевір інтернет.');setGo('Спробувати ще раз');$('go').hidden=false;return}
   }
-  cur=ready.shift();fill();
+  cur=ready.shift();seenAdd(key(cur));fill();
   ph='play';au.src=cur.url;
   au.play().catch(()=>{ph='retry';setMsg('Торкнись, щоб увімкнути звук');setGo('Грати',1);$('go').hidden=false});
   setSt('🎵 Грає мелодія…');
@@ -329,7 +422,7 @@ async function startRound(){
   },100);
 }
 au.onended=()=>{if(ph==='play')noOne()};
-au.onerror=()=>{if(ph==='play'&&ready.length){ph='skip';startRound()}};
+au.onerror=()=>{if(ph==='play'){dropBad(cur);ph='skip';startRound()}};
 const noOne=()=>reveal(-1,'😶 Ніхто не вгадав. Балів немає');
 
 function buzz(p){
@@ -434,7 +527,7 @@ $('g1').onclick=openGame;
   function frame(now){
     const t=now/1000;
     if(!W||W!==c.clientWidth)fit();
-    amp+=((ph==='play'?1:0)-amp)*0.12;
+    amp+=(((ph==='play'&&bPlay)?1:0)-amp)*0.12;
     x.clearRect(0,0,W,Hh);
     const gap=3,bw=(W-gap*(N-1))/N;
     const kick=Math.pow(Math.max(0,1-((t%0.48)/0.48)*2),2);
