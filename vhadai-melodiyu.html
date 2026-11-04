@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<title>Вгадай мелодію</title>
+<style>
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0a1228;color:#fff;font-family:"Trebuchet MS",system-ui,sans-serif}
+#app{height:100dvh;display:flex;flex-direction:column}
+.half{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:14px 16px}
+.p1{background:#0057b7;transform:rotate(180deg)}
+.p2{background:#ffd500;color:#14213d}
+.st{font-size:1.05rem;line-height:1.35;text-align:center;min-height:4.1em;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.st b{font-size:1.3rem}
+.sc{font-size:.95rem;opacity:.85}
+.buz{flex:1;width:100%;max-width:420px;border:0;border-radius:28px;font:800 2.2rem "Trebuchet MS",system-ui,sans-serif;color:inherit;background:rgba(255,255,255,.22);transition:transform .08s}
+.p2 .buz{background:rgba(20,33,61,.14)}
+.buz:active{transform:scale(.96)}
+.buz:disabled{opacity:.35}
+#mid{padding:8px 16px;display:flex;flex-direction:column;gap:8px;align-items:center;background:#0a1228}
+#bar{width:100%;height:6px;background:rgba(255,255,255,.15);border-radius:3px;overflow:hidden}
+#fill{height:100%;width:0;background:linear-gradient(90deg,#0057b7,#ffd500)}
+#go{min-height:46px;padding:0 28px;border:0;border-radius:23px;background:#fff;color:#0a1228;font:800 1.1rem "Trebuchet MS",system-ui,sans-serif}
+#src{font-size:.7rem;opacity:.5}
+.ov{position:fixed;inset:0;background:rgba(10,18,40,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;text-align:center}
+.ov[hidden],#go[hidden]{display:none}
+.ov h2{font-size:1.5rem}
+#inp{width:100%;max-width:420px;font:600 1.3rem "Trebuchet MS",system-ui,sans-serif;padding:14px;border-radius:14px;border:3px solid #ffd500;background:#fff;color:#0a1228;-webkit-user-select:text;user-select:text}
+#ok{min-height:50px;width:100%;max-width:420px;border:0;border-radius:14px;background:#ffd500;color:#14213d;font:800 1.2rem "Trebuchet MS",system-ui,sans-serif}
+#ans.b h2{color:#6fb1ff}#ans.y h2{color:#ffd500}
+#tl{font-size:1.1rem;opacity:.8}
+</style>
+</head>
+<body>
+<div id="app">
+  <section class="half p1">
+    <div class="st"></div>
+    <button class="buz" id="b0">Знаю!</button>
+    <div class="sc"></div>
+  </section>
+  <div id="mid">
+    <div id="bar"><div id="fill"></div></div>
+    <button id="go" hidden>▶ Старт</button>
+    <div id="src">Фрагменти надає iTunes Search API (Apple)</div>
+  </div>
+  <section class="half p2">
+    <div class="st"></div>
+    <button class="buz" id="b1">Знаю!</button>
+    <div class="sc"></div>
+  </section>
+</div>
+
+<div class="ov" id="ans" hidden>
+  <h2 id="who"></h2>
+  <div>Напиши назву пісні (можна з помилками)</div>
+  <input id="inp" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Назва пісні">
+  <button id="ok">Відповісти</button>
+  <div id="tl"></div>
+</div>
+
+<div class="ov" id="end" hidden>
+  <h2 id="win"></h2>
+  <div id="fin"></div>
+  <button id="again" style="min-height:50px;padding:0 30px;border:0;border-radius:25px;background:#ffd500;color:#14213d;font:800 1.2rem 'Trebuchet MS',system-ui,sans-serif">Грати знову</button>
+</div>
+
+<audio id="au" preload="auto" playsinline></audio>
+
+<script>
+const $=id=>document.getElementById(id);
+const NAMES=['Синій','Жовтий'];
+const ROUNDS=10, LIMIT=10;
+
+// Назви й виконавці — лише для пошуку та перевірки відповіді. Аудіо береться з iTunes.
+const POOL=[
+ {a:'Океан Ельзи',t:'Обійми'},
+ {a:'Океан Ельзи',t:'Відпусти'},
+ {a:'Kalush Orchestra',t:'Stefania',alt:['Стефанія']},
+ {a:'Go_A',t:'Shum',alt:['Шум']},
+ {a:'KAZKA',t:'Плакала',alt:['Plakala']},
+ {a:'TVORCHI',t:'Heart of Steel'},
+ {a:'Jamala',t:'1944'},
+ {a:'Антитіла',t:'Фортеця Бахмут'},
+ {a:'Христина Соловій',t:'Тримай'},
+ {a:'Onuka',t:'Vsi svoi',alt:['Всі свої']},
+ {a:'Бумбокс',t:'Вахтерам'},
+ {a:'MELOVIN',t:'Under the Ladder'},
+ {a:'The Hardkiss',t:'Helpless'},
+ {a:'MARUV',t:'Siren Song'},
+ {a:'Скрябін',t:'Мам'},
+ {a:'Pianoбой',t:'Ти не така'},
+ {a:'Alyona Alyona',t:'Рибки'},
+ {a:'Jerry Heil',t:'Ти ж мене підманула'}
+];
+
+/* ---------- нечіткий збіг ---------- */
+const TR={а:'a',б:'b',в:'v',г:'h',ґ:'g',д:'d',е:'e',є:'ye',ж:'zh',з:'z',и:'y',і:'i',ї:'yi',й:'y',к:'k',л:'l',м:'m',н:'n',о:'o',п:'p',р:'r',с:'s',т:'t',у:'u',ф:'f',х:'kh',ц:'ts',ч:'ch',ш:'sh',щ:'shch',ь:'',ю:'yu',я:'ya',ы:'y',э:'e',ё:'e'};
+function norm(s){
+  s=s.toLowerCase().replace(/[ʼ'’`]/g,'').replace(/[^a-zа-яіїєґё0-9]+/g,' ').trim();
+  return s.replace(/[а-яіїєґё]/g,c=>TR[c]??c).replace(/\s+/g,' ');
+}
+function lev(a,b){
+  const m=a.length,n=b.length,d=Array.from({length:m+1},(_,i)=>[i]);
+  for(let j=1;j<=n;j++)d[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)
+    d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  return d[m][n];
+}
+const sim=(a,b)=>{const m=Math.max(a.length,b.length);return m?1-lev(a,b)/m:1};
+function check(input,song){
+  const u=norm(input); if(!u)return false;
+  for(const raw of [song.t,...(song.alt||[])]){
+    const tg=norm(raw);
+    if(sim(u,tg)>=0.68)return true;
+    let tw=tg.split(' '); const long=tw.filter(w=>w.length>=3); if(long.length)tw=long;
+    const uw=u.split(' ');
+    let hit=0; tw.forEach(w=>{if(uw.some(x=>sim(x,w)>=0.75))hit++});
+    if(tw.length>1 && hit>=Math.ceil(tw.length/2))return true;
+  }
+  return false;
+}
+
+/* ---------- завантаження пісень ---------- */
+function jsonp(url){
+  return new Promise((res,rej)=>{
+    const cb='cb'+Math.random().toString(36).slice(2),s=document.createElement('script');
+    const end=()=>{clearTimeout(t);delete window[cb];s.remove()};
+    const t=setTimeout(()=>{end();rej()},8000);
+    window[cb]=d=>{end();res(d)};
+    s.onerror=()=>{end();rej()};
+    s.src=url+'&callback='+cb;document.head.appendChild(s);
+  });
+}
+async function find(s){
+  try{
+    const q=encodeURIComponent(s.a+' '+s.t);
+    const url=`https://itunes.apple.com/search?term=${q}&entity=song&limit=8&country=UA`;
+    let j;
+    try{j=await jsonp(url)}catch(e){const r=await fetch(url);j=await r.json()}
+    const A=norm(s.a);
+    const m=j.results.find(x=>x.previewUrl && (norm(x.artistName).includes(A.split(' ')[0].slice(0,4)) || sim(norm(x.artistName),A)>=.5));
+    return m?{...s,url:m.previewUrl}:null;
+  }catch(e){return null}
+}
+
+/* ---------- стан гри ---------- */
+let loaded=[],game=[],round=0,sc=[0,0],failed=[],who=0,ph='load',cur=null,iv=null,tm=null;
+const au=$('au');
+const setSt=h=>document.querySelectorAll('.st').forEach(e=>e.innerHTML=h);
+const setSc=()=>{
+  document.querySelector('.p1 .sc').textContent=`Ти ${sc[0]} : ${sc[1]}`;
+  document.querySelector('.p2 .sc').textContent=`Ти ${sc[1]} : ${sc[0]}`;
+};
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+
+async function load(){
+  ph='load';$('go').hidden=true;setSt('Шукаю пісні…');setSc();
+  const res=await Promise.all(POOL.map(find));
+  loaded=res.filter(Boolean);
+  if(loaded.length<4){
+    ph='err';setSt(`Знайдено пісень: ${loaded.length} з ${POOL.length}.<br>Перевір інтернет (без VPN) і спробуй ще раз.`);
+    $('go').textContent='Спробувати ще раз';$('go').hidden=false;return;
+  }
+  newGame();
+}
+function newGame(){
+  game=shuffle(loaded).slice(0,ROUNDS);round=0;sc=[0,0];$('end').hidden=true;ready();
+}
+function ready(){
+  ph='idle';setSc();$('fill').style.width='0';
+  setSt(`Раунд ${round+1} з ${game.length}<br>Слухай і тисни «Знаю!» першим`);
+  $('go').textContent='▶ Старт';$('go').hidden=false;
+}
+
+function startRound(){
+  cur=game[round];failed=[];ph='play';$('go').hidden=true;
+  au.src=cur.url;
+  au.play().catch(()=>{setSt('Не вдалося увімкнути звук.<br>Натисни «Старт» ще раз.');ph='idle';$('go').hidden=false});
+  setSt('🎵 Грає мелодія…');
+  clearInterval(iv);
+  iv=setInterval(()=>{
+    $('fill').style.width=Math.min(au.currentTime/LIMIT,1)*100+'%';
+    if(ph==='play'&&au.currentTime>=LIMIT)reveal(-1,'Час вийшов');
+  },100);
+}
+
+function buzz(p){
+  if(ph!=='play'||failed.includes(p))return;
+  au.pause();ph='ans';who=p;
+  $('ans').className='ov '+(p?'y':'b');
+  $('who').textContent=`${NAMES[p]}, твоя відповідь`;
+  $('inp').value='';$('ans').hidden=false;
+  setTimeout(()=>$('inp').focus(),50);
+  let t=15;$('tl').textContent=`${t} с`;
+  clearInterval(tm);
+  tm=setInterval(()=>{t--;$('tl').textContent=`${t} с`;if(t<=0)answer(true)},1000);
+}
+
+function answer(timeout){
+  clearInterval(tm);
+  const ok=!timeout&&check($('inp').value,cur);
+  $('ans').hidden=true;$('inp').blur();
+  if(ok){sc[who]++;reveal(who,'Вірно!');return}
+  failed.push(who);
+  if(failed.length>=2){reveal(-1,'Обоє помилилися');return}
+  ph='play';au.play();
+  setSt(`${NAMES[who]} не вгадав.<br>${NAMES[1-who]}, тисни «Знаю!»`);
+}
+
+function reveal(w,msg){
+  clearInterval(iv);clearInterval(tm);au.pause();ph='rev';setSc();
+  setSt(`${msg}${w>=0?' +1 '+NAMES[w]:''}<br><b>${cur.t}</b>${cur.a}`);
+  $('go').textContent=round+1<game.length?'Далі →':'Результат';
+  $('go').hidden=false;
+}
+
+function finish(){
+  const [a,b]=sc;
+  $('win').textContent=a===b?'Нічия!':`Перемагає ${a>b?NAMES[0]:NAMES[1]}`;
+  $('fin').textContent=`Синій ${a} : ${b} Жовтий`;
+  $('end').hidden=false;
+}
+
+$('go').onclick=()=>{
+  if(ph==='err')load();
+  else if(ph==='idle')startRound();
+  else if(ph==='rev'){round++;round>=game.length?finish():ready()}
+};
+$('b0').onpointerdown=()=>buzz(0);
+$('b1').onpointerdown=()=>buzz(1);
+$('ok').onclick=()=>answer(false);
+$('inp').onkeydown=e=>{if(e.key==='Enter')answer(false)};
+$('again').onclick=newGame;
+load();
+</script>
+</body>
+</html>
