@@ -35,12 +35,14 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
 #ttl{position:absolute;right:14px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;-webkit-writing-mode:vertical-rl;white-space:nowrap;letter-spacing:.6px;font-weight:800;font-size:1.17rem;color:#fff;pointer-events:none}
 #eq{width:84%;height:50px;display:block}
 #bar{position:relative;width:84%;height:8px;background:rgba(255,255,255,.12);border-radius:4px}
-#glow{position:absolute;inset:0;filter:drop-shadow(0 0 5px rgba(255,95,174,.65)) drop-shadow(0 0 9px rgba(63,242,214,.45))}
-#fill{position:absolute;inset:0;border-radius:4px;clip-path:inset(0 100% 0 0);background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.75) 50%,transparent 65%) 0 0/220% 100% no-repeat,linear-gradient(90deg,#ff5fae,#a78bfa 50%,#3ff2d6);animation:sh 1.6s linear infinite}
+#glow{position:absolute;inset:0}
+#fill{position:absolute;inset:0;border-radius:4px;clip-path:inset(0 100% 0 0);background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.7) 50%,transparent 65%) 220% 0/220% 100% no-repeat,linear-gradient(90deg,#ff5fae,#a78bfa 50%,#3ff2d6)}
+#bar.live #fill{animation:sh 1.6s linear infinite}
 @keyframes sh{from{background-position:220% 0,0 0}to{background-position:-120% 0,0 0}}
-#head{position:absolute;top:50%;left:0;width:0;height:0;opacity:0;transition:opacity .25s;pointer-events:none}
-#head i{position:absolute;left:-8px;top:-8px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 8px 2px #fff,0 0 18px 6px rgba(167,139,250,.9),0 0 30px 10px rgba(63,242,214,.5);animation:hp .7s ease-in-out infinite alternate}
-@keyframes hp{from{transform:scale(.75)}to{transform:scale(1.15)}}
+#head{position:absolute;top:50%;left:0;width:0;height:0;opacity:0;transition:opacity .9s ease-out;pointer-events:none}
+#head i{position:absolute;right:0;top:-5px;width:54px;height:10px;border-radius:5px;transform-origin:100% 50%;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.55) 65%,#fff);filter:blur(2.5px) drop-shadow(0 0 7px rgba(167,139,250,.95));animation:tw .8s ease-in-out infinite alternate,tv2 1.3s ease-in-out infinite alternate}
+@keyframes tw{from{transform:scaleX(.55);opacity:.7}to{transform:scaleX(1.1);opacity:1}}
+@keyframes tv2{from{margin-top:-1px}to{margin-top:1px}}
 #go{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 32px;border:0;border-radius:23px;background:#f6f3ff;color:#1d0f52;font:800 1.15rem "Avenir Next","Nunito","Trebuchet MS",system-ui,sans-serif}
 #go .pi{flex:0 0 auto}
 #btns{display:flex;align-items:center;justify-content:center;gap:12px}
@@ -258,14 +260,17 @@ let queue=[],ready=[],busy=false,sc=[0,0],ph='menu',cur=null,who=0,iv=null,tm=nu
 const au=$('au');
 const ICO='<svg class="pi" viewBox="0 0 24 24" width="20" height="20" fill="url(#hg)" stroke="url(#hg)" stroke-width="2" stroke-linejoin="round"><path d="M7 4.5v15l12-7.5z"/></svg>';
 function setGo(t,i){$('go').innerHTML=(i===1?ICO:'')+'<span>'+t+'</span>'+(i===2?ICO:'')}
-function setBar(v){$('fill').style.clipPath='inset(0 '+(100-v*100)+'% 0 0)';$('head').style.left=v*100+'%';$('head').style.opacity=v>.004?1:0}
+function setBar(v){$('fill').style.clipPath='inset(0 '+(100-v*100)+'% 0 0)';$('head').style.left=v*100+'%'}
 let bT=0,bS=0,bK=0;
 (function barLoop(now){
+  let on=false;
   if(ph==='play'&&!au.paused){
     const c=au.currentTime;
     if(c!==bT){bT=c;bS=now}
-    setBar(Math.min((bT+Math.min((now-bS)/1000,.3))/LIMIT,1));
+    const v=Math.min((bT+Math.min((now-bS)/1000,.3))/LIMIT,1);
+    setBar(v);on=v>.004&&v<.99;
   }
+  $('head').style.opacity=on?1:0;$('bar').classList.toggle('live',on);
   requestAnimationFrame(barLoop);
 })(0);
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
