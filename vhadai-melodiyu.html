@@ -37,6 +37,9 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
 #bar{width:84%;height:6px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden}
 #fill{height:100%;width:0;background:linear-gradient(90deg,#ff5fae,#3ff2d6)}
 #go{min-height:46px;padding:0 32px;border:0;border-radius:23px;background:#f6f3ff;color:#1d0f52;font:800 1.15rem "Avenir Next","Nunito","Trebuchet MS",system-ui,sans-serif;box-shadow:0 6px 18px rgba(167,139,250,.35)}
+#btns{display:flex;align-items:center;justify-content:center;gap:12px}
+#btns[hidden]{display:none}
+#home{width:46px;height:46px;flex:0 0 auto;border:0;border-radius:50%;background:#f6f3ff;color:#1d0f52;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(167,139,250,.35)}
 #msg{font-size:.92rem;line-height:1.3;text-align:center;min-height:3.9em;display:flex;align-items:center;justify-content:center;opacity:.92}
 #src{font-size:.68rem;opacity:.45}
 .ov{position:fixed;inset:0;background:rgba(11,10,20,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;text-align:center}
@@ -54,7 +57,6 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
 @keyframes bn{to{transform:translateY(-14px) scale(1.08)}}
 #win{font-size:2rem;background:linear-gradient(90deg,#ff8cc6,#5af7dd);-webkit-background-clip:text;background-clip:text;color:transparent}
 #fin{font-size:3rem;font-weight:800}
-#home{position:absolute;right:10px;top:6px;width:34px;height:34px;border:0;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;font-size:1.1rem;line-height:1;z-index:2}
 #menu{z-index:5;overflow:hidden;background:#0b0a14;justify-content:flex-start;gap:0;padding:max(9dvh,40px) 20px 24px}
 #menu>*{position:relative;z-index:1;width:100%;max-width:460px}
 .blob{position:absolute!important;z-index:0!important;border-radius:50%;filter:blur(70px);opacity:.55;pointer-events:none;width:320px!important;height:320px;animation:fl2 9s ease-in-out infinite alternate}
@@ -101,12 +103,14 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
   </section>
   <div id="mid">
     <div id="score"><div class="sn" id="n0">0</div><div class="track"><i id="m0"></i><i id="m1"></i></div><div class="sn" id="n1">0</div></div>
-    <button id="home" aria-label="Головне меню">☰</button>
     <div id="ttl">Вгадай мелодію</div>
     <canvas id="eq"></canvas>
     <div id="bar"><div id="fill"></div></div>
     <div id="msg"></div>
-    <button id="go" hidden>▶ Старт</button>
+    <div id="btns" hidden>
+      <button id="go" hidden>▶ Старт</button>
+      <button id="home" aria-label="Головне меню"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5.5h4v5.5"/></svg></button>
+    </div>
     <div id="src">Фрагменти надає iTunes Search API (Apple)</div>
   </div>
   <section class="half p2">
@@ -388,6 +392,7 @@ function openGame(){
   $('menu').hidden=true;sc=[0,0];setSc();$('fill').style.width='0';load();
 }
 $('home').onclick=toMenu;
+new MutationObserver(()=>{$('btns').hidden=$('go').hidden}).observe($('go'),{attributes:true,attributeFilter:['hidden']});
 $('tomenu').onclick=toMenu;
 $('g1').onclick=openGame;
 /* ---------- еквалайзер ---------- */
