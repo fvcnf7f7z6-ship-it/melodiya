@@ -35,8 +35,9 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
 #ttl{position:absolute;right:14px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;-webkit-writing-mode:vertical-rl;white-space:nowrap;letter-spacing:.6px;font-weight:800;font-size:1.17rem;color:#fff;pointer-events:none}
 #eq{width:84%;height:50px;display:block}
 #bar{width:84%;height:6px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden}
-#fill{height:100%;width:0;background:linear-gradient(90deg,#ff5fae,#3ff2d6)}
-#go{min-height:46px;padding:0 32px;border:0;border-radius:23px;background:#f6f3ff;color:#1d0f52;font:800 1.15rem "Avenir Next","Nunito","Trebuchet MS",system-ui,sans-serif}
+#fill{height:100%;width:100%;transform:scaleX(0);transform-origin:left center;will-change:transform;background:linear-gradient(90deg,#ff5fae,#3ff2d6)}
+#go{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 32px;border:0;border-radius:23px;background:#f6f3ff;color:#1d0f52;font:800 1.15rem "Avenir Next","Nunito","Trebuchet MS",system-ui,sans-serif}
+#go .pi{flex:0 0 auto}
 #btns{display:flex;align-items:center;justify-content:center;gap:12px}
 #btns[hidden]{display:none}
 #home{width:46px;height:46px;flex:0 0 auto;border:0;border-radius:50%;background:#f6f3ff;color:#1d0f52;display:flex;align-items:center;justify-content:center}
@@ -84,6 +85,8 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="hg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="0" spreadMethod="reflect"><stop offset="0" stop-color="#ff5fae"/><stop offset="1" stop-color="#3ff2d6"/><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="48 0" dur="3s" repeatCount="indefinite"/></linearGradient></defs></svg>
+
 <div class="ov" id="menu">
   <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
   <div class="mh"><small>Один екран · двоє гравців</small><h1>Ігри для двох</h1></div>
@@ -108,8 +111,8 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
     <div id="bar"><div id="fill"></div></div>
     <div id="msg"></div>
     <div id="btns" hidden>
-      <button id="go" hidden>▶ Старт</button>
-      <button id="home" aria-label="Головне меню"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="url(#hg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><defs><linearGradient id="hg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="0" spreadMethod="reflect"><stop offset="0" stop-color="#ff5fae"/><stop offset="1" stop-color="#3ff2d6"/><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="48 0" dur="3s" repeatCount="indefinite"/></linearGradient></defs><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5.5h4v5.5"/></svg></button>
+      <button id="go" hidden>Старт</button>
+      <button id="home" aria-label="Головне меню"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="url(#hg)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5.5h4v5.5"/></svg></button>
     </div>
     <div id="src">Фрагменти надає iTunes Search API (Apple)</div>
   </div>
@@ -248,6 +251,18 @@ async function find(s){
 /* ---------- гра ---------- */
 let queue=[],ready=[],busy=false,sc=[0,0],ph='menu',cur=null,who=0,iv=null,tm=null;
 const au=$('au');
+const ICO='<svg class="pi" viewBox="0 0 24 24" width="20" height="20" fill="url(#hg)" stroke="url(#hg)" stroke-width="2" stroke-linejoin="round"><path d="M7 4.5v15l12-7.5z"/></svg>';
+function setGo(t,i){$('go').innerHTML=(i===1?ICO:'')+'<span>'+t+'</span>'+(i===2?ICO:'')}
+function setBar(v){$('fill').style.transform='scaleX('+v+')'}
+let bT=0,bS=0,bK=0;
+(function barLoop(now){
+  if(ph==='play'&&!au.paused){
+    const c=au.currentTime;
+    if(c!==bT){bT=c;bS=now}
+    setBar(Math.min((bT+Math.min((now-bS)/1000,.3))/LIMIT,1));
+  }
+  requestAnimationFrame(barLoop);
+})(0);
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
 const setSt=h=>{$('msg').innerHTML='';document.querySelectorAll('.st').forEach(e=>e.innerHTML=h)};
@@ -278,29 +293,28 @@ async function load(){
   if(ph!=='load')return;
   if(!ready.length){
     ph='err';setMsg('Не вдалося знайти пісні.<br>iTunes міг тимчасово обмежити запити — зачекай хвилину (без VPN) і спробуй ще раз.');
-    $('go').textContent='Спробувати ще раз';$('go').hidden=false;return;
+    setGo('Спробувати ще раз');$('go').hidden=false;return;
   }
   ph='idle';
   setMsg(`Слухай мелодію. Хто впізнав — тисни «ЗНАЮ» і впиши назву.<br>Перший до ${TARGET} балів перемагає.`);
-  $('go').textContent='▶ Старт';$('go').hidden=false;
+  setGo('Старт',1);$('go').hidden=false;
 }
 
 function newGame(){sc=[0,0];setSc();$('end').hidden=true;startRound()}
 
 async function startRound(){
-  $('go').hidden=true;clearInterval(iv);$('fill').style.width='0';
+  $('go').hidden=true;clearInterval(iv);setBar(0);bT=0;bS=0;
   if(!ready.length){
     ph='wait';setMsg('Завантажую наступну пісню…');
     await waitReady();
     if(ph!=='wait')return;
-    if(!ready.length){ph='err';setMsg('Не вдалося завантажити пісню.<br>Перевір інтернет.');$('go').textContent='Спробувати ще раз';$('go').hidden=false;return}
+    if(!ready.length){ph='err';setMsg('Не вдалося завантажити пісню.<br>Перевір інтернет.');setGo('Спробувати ще раз');$('go').hidden=false;return}
   }
   cur=ready.shift();fill();
   ph='play';au.src=cur.url;
-  au.play().catch(()=>{ph='retry';setMsg('Торкнись, щоб увімкнути звук');$('go').textContent='▶ Грати';$('go').hidden=false});
+  au.play().catch(()=>{ph='retry';setMsg('Торкнись, щоб увімкнути звук');setGo('Грати',1);$('go').hidden=false});
   setSt('🎵 Грає мелодія…');
   iv=setInterval(()=>{
-    $('fill').style.width=Math.min(au.currentTime/LIMIT,1)*100+'%';
     if(ph==='play'&&au.currentTime>=LIMIT)noOne();
   },100);
 }
@@ -338,7 +352,7 @@ function reveal(w,msg){
   setSt(`${msg}<b>${cur.t}</b><small>${cur.a}</small>`);
   if(w>=0)flash(w);
   if(sc[0]>=TARGET||sc[1]>=TARGET){setTimeout(finish,2300);return}
-  $('go').textContent='Далі ▶';$('go').hidden=false;
+  setGo('Далі',2);$('go').hidden=false;
 }
 
 function finish(){
@@ -389,7 +403,7 @@ function toMenu(){
   $('menu').hidden=false;
 }
 function openGame(){
-  $('menu').hidden=true;sc=[0,0];setSc();$('fill').style.width='0';load();
+  $('menu').hidden=true;sc=[0,0];setSc();setBar(0);load();
 }
 $('home').onclick=toMenu;
 new MutationObserver(()=>{$('btns').hidden=$('go').hidden}).observe($('go'),{attributes:true,attributeFilter:['hidden']});
