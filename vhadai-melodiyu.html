@@ -34,8 +34,13 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
 #mid{position:relative;flex:0 0 33dvh;min-height:250px;padding:10px 52px;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;background:#0b0a14}
 #ttl{position:absolute;right:14px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;-webkit-writing-mode:vertical-rl;white-space:nowrap;letter-spacing:.6px;font-weight:800;font-size:1.17rem;color:#fff;pointer-events:none}
 #eq{width:84%;height:50px;display:block}
-#bar{width:84%;height:6px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden}
-#fill{height:100%;width:100%;transform:scaleX(0);transform-origin:left center;will-change:transform;background:linear-gradient(90deg,#ff5fae,#3ff2d6)}
+#bar{position:relative;width:84%;height:8px;background:rgba(255,255,255,.12);border-radius:4px}
+#glow{position:absolute;inset:0;filter:drop-shadow(0 0 5px rgba(255,95,174,.65)) drop-shadow(0 0 9px rgba(63,242,214,.45))}
+#fill{position:absolute;inset:0;border-radius:4px;clip-path:inset(0 100% 0 0);background:linear-gradient(100deg,transparent 35%,rgba(255,255,255,.75) 50%,transparent 65%) 0 0/220% 100% no-repeat,linear-gradient(90deg,#ff5fae,#a78bfa 50%,#3ff2d6);animation:sh 1.6s linear infinite}
+@keyframes sh{from{background-position:220% 0,0 0}to{background-position:-120% 0,0 0}}
+#head{position:absolute;top:50%;left:0;width:0;height:0;opacity:0;transition:opacity .25s;pointer-events:none}
+#head i{position:absolute;left:-8px;top:-8px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 8px 2px #fff,0 0 18px 6px rgba(167,139,250,.9),0 0 30px 10px rgba(63,242,214,.5);animation:hp .7s ease-in-out infinite alternate}
+@keyframes hp{from{transform:scale(.75)}to{transform:scale(1.15)}}
 #go{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 32px;border:0;border-radius:23px;background:#f6f3ff;color:#1d0f52;font:800 1.15rem "Avenir Next","Nunito","Trebuchet MS",system-ui,sans-serif}
 #go .pi{flex:0 0 auto}
 #btns{display:flex;align-items:center;justify-content:center;gap:12px}
@@ -108,7 +113,7 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
     <div id="score"><div class="sn" id="n0">0</div><div class="track"><i id="m0"></i><i id="m1"></i></div><div class="sn" id="n1">0</div></div>
     <div id="ttl">Вгадай мелодію</div>
     <canvas id="eq"></canvas>
-    <div id="bar"><div id="fill"></div></div>
+    <div id="bar"><div id="glow"><div id="fill"></div></div><div id="head"><i></i></div></div>
     <div id="msg"></div>
     <div id="btns" hidden>
       <button id="go" hidden>Старт</button>
@@ -253,7 +258,7 @@ let queue=[],ready=[],busy=false,sc=[0,0],ph='menu',cur=null,who=0,iv=null,tm=nu
 const au=$('au');
 const ICO='<svg class="pi" viewBox="0 0 24 24" width="20" height="20" fill="url(#hg)" stroke="url(#hg)" stroke-width="2" stroke-linejoin="round"><path d="M7 4.5v15l12-7.5z"/></svg>';
 function setGo(t,i){$('go').innerHTML=(i===1?ICO:'')+'<span>'+t+'</span>'+(i===2?ICO:'')}
-function setBar(v){$('fill').style.transform='scaleX('+v+')'}
+function setBar(v){$('fill').style.clipPath='inset(0 '+(100-v*100)+'% 0 0)';$('head').style.left=v*100+'%';$('head').style.opacity=v>.004?1:0}
 let bT=0,bS=0,bK=0;
 (function barLoop(now){
   if(ph==='play'&&!au.paused){
