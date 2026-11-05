@@ -31,7 +31,7 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
 
 .flash{animation:fl .8s ease-out}
 @keyframes fl{0%{filter:brightness(1.9) saturate(1.4)}100%{filter:none}}
-#mid{position:relative;flex:0 0 33dvh;min-height:250px;padding:10px 52px;display:flex;flex-direction:column;gap:8px;align-items:center;justify-content:center;background:#0b0a14}
+#mid{position:relative;flex:0 0 33dvh;min-height:260px;padding:12px 52px;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;background:#0b0a14}
 #ttl{position:absolute;right:14px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;-webkit-writing-mode:vertical-rl;white-space:nowrap;letter-spacing:.6px;font-weight:800;font-size:1.17rem;color:#fff;pointer-events:none}
 #eq{width:84%;height:50px;display:block}
 #bar{position:relative;width:84%;height:8px;background:rgba(255,255,255,.12);border-radius:4px}
@@ -45,11 +45,11 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
 @keyframes tv2{from{margin-top:-1px}to{margin-top:1px}}
 #go{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 32px;border:0;border-radius:23px;background:#f6f3ff;color:#1d0f52;font:800 1.15rem "Avenir Next","Nunito","Trebuchet MS",system-ui,sans-serif}
 #go .pi{flex:0 0 auto}
-#btns{display:flex;align-items:center;justify-content:center;gap:12px}
-#btns[hidden]{display:none}
+#btns{display:flex;align-items:center;justify-content:center;gap:12px;min-height:46px;margin-top:2px}
+#btns[hidden]{display:flex;visibility:hidden}
 #home{width:46px;height:46px;flex:0 0 auto;border:0;border-radius:50%;background:#f6f3ff;color:#1d0f52;display:flex;align-items:center;justify-content:center}
-#msg{font-size:.92rem;line-height:1.3;text-align:center;min-height:3.9em;display:flex;align-items:center;justify-content:center;opacity:.92}
-#src{font-size:.68rem;opacity:.45}
+#msg{width:84%;text-wrap:balance;font-size:.92rem;line-height:1.3;text-align:center;min-height:3.9em;display:flex;align-items:center;justify-content:center;opacity:.92}
+#src{font-size:.68rem;opacity:.45;margin-top:14px;padding-bottom:2px;text-align:center}
 .ov{position:fixed;inset:0;background:rgba(11,10,20,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;text-align:center}
 .ov[hidden],#go[hidden]{display:none}
 .ov h2{font-size:1.5rem}
@@ -87,7 +87,7 @@ html,body{height:100%;overflow:hidden;touch-action:manipulation;background:#0b0a
 </style>
 </head>
 <body>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="hg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="0" spreadMethod="reflect"><stop offset="0" stop-color="#ff5fae"/><stop offset="1" stop-color="#3ff2d6"/><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="48 0" dur="3s" repeatCount="indefinite"/></linearGradient></defs></svg>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="hg" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="0" spreadMethod="reflect"><stop offset="0" stop-color="#b3125f"/><stop offset="0.5" stop-color="#5a2bc4"/><stop offset="1" stop-color="#00756d"/><animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="48 0" dur="3s" repeatCount="indefinite"/></linearGradient></defs></svg>
 
 <div class="ov" id="menu">
     <div class="mh"><small>Один екран · двоє гравців</small><h1>Ігри для двох</h1></div>
@@ -159,11 +159,11 @@ const POOL=[
  {a:'Go_A',t:'Shum',alt:['Шум'],aa:['Го А'],k:'go a'},{a:'Go_A',t:'Solovey',alt:['Соловей'],aa:['Го А'],k:'go a'},
  {a:'KAZKA',t:'Плакала',alt:['Plakala']},{a:'KAZKA',t:'Свята'},{a:'KAZKA',t:'Дива'},{a:'KAZKA',t:'Криниця'},
  {a:'TVORCHI',t:'Heart of Steel',alt:['Серце зі сталі','Харт оф стіл']},{a:'TVORCHI',t:'Bumblebee',alt:['Бамблбі','Джміль']},
- {a:'Jamala',t:'1944',aa:['Джамала']},{a:'Jamala',t:'Заплуталась',aa:['Джамала']},{a:'Jamala',t:'Подих',aa:['Джамала']},
+ {a:'Jamala',t:'1944',aa:['Джамала']},{a:'Jamala',t:'Подих',aa:['Джамала']},
  {a:'Антитіла',t:'Фортеця Бахмут'},
  {a:'Христина Соловій',t:'Тримай'},
  {a:'Onuka',t:'Vsi svoi',alt:['Всі свої']},{a:'Onuka',t:'Misto',alt:['Місто']},
- {a:'Бумбокс',t:'Вахтерам',alt:['Vakhteram']},{a:'Бумбокс',t:'Квіти в волоссі'},{a:'Бумбокс',t:'Таця'},
+ {a:'Бумбокс',t:'Квіти в волоссі'},{a:'Бумбокс',t:'Таця'},
  {a:'MELOVIN',aa:['Мелович','Мелвін'],t:'Under the Ladder',alt:['Андер зе леддер','Під драбиною']},
  {a:'The Hardkiss',t:'Helpless',alt:['Хелплес','Безпорадна']},{a:'The Hardkiss',t:'Make Up',alt:['Мейк ап']},
  {a:'The Hardkiss',t:'Кораблі'},{a:'The Hardkiss',t:'Stones',alt:['Стоунз']},
@@ -178,29 +178,26 @@ const POOL=[
  // поп і хіп-хоп
  {a:'Alyona Alyona',t:'Рибки'},{a:'Alyona Alyona',t:'Пушка'},
  {a:'Alyona Alyona',t:'Teresa & Maria',alt:['Тереза і Марія']},
- {a:'Монатік',t:'Вітаміни'},
+ 
  {a:'Руслана',t:'Wild Dances',alt:['Дикі танці']},
  {a:'Верка Сердючка',t:'Dancing Lasha Tumbai',alt:['Денсінг Лаша Тумбай','Данс Лаша Тумбай','Лаша Тумбай','Танцюю Лаша Тумбай']},
  {a:'Тіна Кароль',t:'Show Me Your Love',alt:['Шоу мі ю лав','Покажи свою любов']},
- {a:'Тіна Кароль',t:'Ноченька'},{a:'Тіна Кароль',t:'Вільна'},
+ {a:'Тіна Кароль',t:'Вільна'},
  {a:'Ані Лорак',t:'Shady Lady',alt:['Шейді лейді']},
  {a:'Pianoбой',t:'Ти не така'}
 ];
 // Виконавці: пісні беруться з iTunes автоматично (до 40 на виконавця) — це дає сотні різних треків
 const AR=(a,o={})=>({a,any:true,...o});
 const ARTISTS=[
- AR('Океан Ельзи'),AR('Скрябін'),AR('Воплі Відоплясова'),AR('Тартак'),AR('Друга Ріка'),AR('Бумбокс'),
- AR('Антитіла'),AR('KAZKA'),AR('The Hardkiss'),AR('Тіна Кароль'),AR('Jamala',{aa:['Джамала']}),AR('Onuka'),
- AR('Go_A',{aa:['Го А'],k:'go a'}),AR('Kalush Orchestra'),AR('TVORCHI'),AR('MARUV'),AR('Alyona Alyona'),
- AR('MELOVIN',{aa:['Мелович','Мелвін']}),AR('Христина Соловій'),AR('Pianoбой'),AR('Руслана'),
- AR('Софія Ротару',{aa:['Ротару','Sofia Rotaru']}),AR('Брати Гадюкіни'),AR('ДахаБраха',{aa:['DakhaBrakha','Dakha Brakha']}),
- AR('Один в каное'),AR('Latexfauna'),AR('Артем Пивоваров'),AR('Святослав Вакарчук'),AR('Dzidzio',{aa:['Дзідзьо']}),
- AR('Jerry Heil'),AR('Alina Pash'),AR('LELÉKA',{aa:['Лелека']}),AR('Марія Бурмака'),AR('Іво Бобул'),
- AR('Тарас Чубай'),AR('Плач Єремії'),AR('Мандри'),AR('Кому Вниз'),AR('Мотор\'ролла'),AR('Фліт'),
- AR('Гайдамаки'),AR('Жадан і Собаки'),AR('Сергій Бабкін'),AR('Vivienne Mort'),AR('Козак Систем'),
- AR('Паліндром'),AR('Тінь Сонця'),AR('Mamarika'),AR('NK',{aa:['Настя Каменських']}),AR('Ірина Білик'),
- AR('Оля Полякова'),AR('Alyosha',{aa:['Альоша']}),AR('Злата Огнєвіч'),AR('Maks Barskih',{aa:['Макс Барських']}),
- AR('Tember'),AR('Skofka'),AR('Poshlaya Molly'),AR('Хамерман Знищує Віруси')
+ AR('Океан Ельзи'),AR('Воплі Відоплясова'),AR('Тартак'),AR('Антитіла'),AR('KAZKA'),AR('The Hardkiss'),
+ AR('Jamala',{aa:['Джамала']}),AR('Onuka'),AR('Go_A',{aa:['Го А'],k:'go a'}),AR('Kalush Orchestra'),
+ AR('TVORCHI'),AR('MARUV'),AR('Alyona Alyona'),AR('MELOVIN',{aa:['Мелович','Мелвін']}),AR('Христина Соловій'),
+ AR('Руслана'),AR('ДахаБраха',{aa:['DakhaBrakha','Dakha Brakha']}),AR('Один в каное'),AR('Latexfauna'),
+ AR('Святослав Вакарчук'),AR('Dzidzio',{aa:['Дзідзьо']}),AR('Jerry Heil'),
+ AR('LELÉKA',{aa:['Лелека']}),AR('Марія Бурмака'),AR('Іво Бобул'),AR('Тарас Чубай'),AR('Плач Єремії'),
+ AR('Мандри'),AR('Кому Вниз'),AR('Мотор\'ролла'),AR('Фліт'),AR('Гайдамаки'),AR('Жадан і Собаки'),
+ AR('Vivienne Mort'),AR('Козак Систем'),AR('Паліндром'),AR('Тінь Сонця'),
+ AR('Хамерман Знищує Віруси')
 ];
 
 /* ---------- нечіткий збіг ---------- */
@@ -257,7 +254,7 @@ function jsonp(url){
     s.src=url+'&callback='+cb;document.head.appendChild(s);
   });
 }
-const CK='melodiya_urls',AK='melodiya_art',SK='melodiya_seen';
+const CK='melodiya_urls',AK='melodiya_art2',SK='melodiya_seen';
 const key=s=>s.a+'|'+s.t;
 const cacheGet=()=>{try{return JSON.parse(localStorage.getItem(CK))||{}}catch(e){return{}}};
 const cacheSet=(s,u)=>{try{const c=cacheGet();c[key(s)]=u;localStorage.setItem(CK,JSON.stringify(c))}catch(e){}};
@@ -284,6 +281,12 @@ function artKeys(s){
   return ks.length?ks:[norm(s.a).split(' ')[0]];
 }
 const artOk=(s,name)=>{const n=norm(name||'');return artKeys(s).some(k=>n.includes(k))};
+const RU_W=['что','это','тебя','меня','тебе','мне','твой','мой','моя','любовь','люблю','только','когда','если','или','нет','где','ночь','сердце','жизнь','привет','хочу','буду','можно','нельзя','снова','опять','кто','всё','тобой','без тебя','дождь','девочка','не плачь'];
+const isRu=t=>{
+  if(/[ыэъё]/i.test(t))return true;
+  const w=' '+t.toLowerCase().replace(/[^а-яіїєґё]+/g,' ').trim()+' ';
+  return RU_W.some(x=>w.includes(' '+x+' '));
+};
 const BAD=/remix|live|instrumental|karaoke|acoustic|radio edit|version|\bedit\b|\bmix\b|demo|intro|outro|skit|ремікс|наживо|концерт/i;
 const cleanTitle=t=>t.replace(/\s*[\(\[].*?[\)\]]/g,'').replace(/\s+-\s+.*$/,'').trim();
 
@@ -311,9 +314,9 @@ async function findArtist(s){
     const j=await search(`https://itunes.apple.com/search?term=${q}&entity=song&attribute=artistTerm&limit=60&country=UA`);
     const seen=new Set(),out=[];
     for(const x of j.results||[]){
-      if(!x.previewUrl||!artOk(s,x.artistName)||BAD.test(x.trackName))continue;
+      if(!x.previewUrl||!artOk(s,x.artistName)||BAD.test(x.trackName)||isRu(x.trackName))continue;
       const t=cleanTitle(x.trackName),n=norm(t);
-      if(!n||t.length>40||seen.has(n))continue;
+      if(!n||t.length>40||seen.has(n)||isRu(t))continue;
       seen.add(n);out.push({t,u:x.previewUrl});
     }
     return out.slice(0,40);
@@ -332,6 +335,8 @@ async function resolve(s){
     if(!list.length){MISS.add(s.a);return null}
     artSet(s.a,list);
   }
+  list=list.filter(x=>!isRu(x.t));
+  if(!list.length)return null;
   const fresh=list.filter(x=>!SEEN.has(s.a+'|'+x.t));
   const arr=fresh.length?fresh:list;
   const x=arr[Math.random()*arr.length|0];
